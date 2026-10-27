@@ -13,6 +13,8 @@ def handle_client(conn: socket.socket, addr: socket._RetAddress):
     connected = True
     while connected:
         msg_length = conn.recv(HEADER_SIZE).decode(FORMAT)
+        if not msg_length:
+            continue
         msg_length = int(msg_length)
 
         msg = conn.recv(msg_length).decode(FORMAT)
@@ -35,7 +37,7 @@ def start_server():
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
 
-        print(f'[System] Active connections: {thread.active_count() - 1}')
+        print(f'[System] Active connections: {threading.active_count() - 1}')
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
