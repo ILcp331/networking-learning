@@ -2,13 +2,27 @@ import socket
 import threading
 
 from utils import get_local_ip
-from config import PORT
+from config import PORT, FORMAT, HEADER_SIZE, DISCONNECT_SIGNAL
 
 ADDR = (get_local_ip(), PORT)
 
 
 def handle_client(conn: socket.socket, addr: socket._RetAddress):
-    pass
+    print(f'[System] New connection from {addr}')
+
+    connected = True
+    while connected:
+        msg_length = conn.recv(HEADER_SIZE).decode(FORMAT)
+        msg_length = int(msg_length)
+
+        msg = conn.recv(msg_length).decode(FORMAT)
+
+        if msg == DISCONNECT_SIGNAL:
+            connected = False
+
+        print(f'[{addr}]: {msg}')
+
+    conn.close()
 
 
 def start_server():
