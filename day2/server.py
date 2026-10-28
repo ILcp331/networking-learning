@@ -13,14 +13,18 @@ def handle_client(conn: socket.socket, addr: socket._RetAddress):
     connected = True
     while connected:
         msg_length = conn.recv(HEADER_SIZE).decode(FORMAT)
+        msg_length = msg_length.replace('\0', '')
+
         if not msg_length:
             continue
+
         msg_length = int(msg_length)
 
         msg = conn.recv(msg_length).decode(FORMAT)
 
         if msg == DISCONNECT_SIGNAL:
             connected = False
+            continue
 
         print(f'[{addr}]: {msg}')
 
@@ -41,6 +45,7 @@ def start_server():
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server.bind(ADDR)
 
 start_server()
