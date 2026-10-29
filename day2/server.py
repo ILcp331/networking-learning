@@ -24,6 +24,9 @@ def handle_client(conn: socket.socket, addr: socket._RetAddress):
 
         if msg == DISCONNECT_SIGNAL:
             connected = False
+            print(f'[{addr}] disconnected.')
+            print(f'[System] Active connections: {threading.active_count() - 1}')
+
             continue
 
         print(f'[{addr}]: {msg}')

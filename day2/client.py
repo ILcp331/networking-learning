@@ -24,7 +24,7 @@ def send(message: str):
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
-print('\n[System] Connection success!')
+print(f'\n[System] Successfully connected to {ADDR[0]}:{ADDR[1]}.')
 print('Submit a blank message or "!q" to disconnect.')
 
 while True:
@@ -33,8 +33,9 @@ while True:
 
     if message:
         send(message)
-
     else:
         break
 
 send(DISCONNECT_SIGNAL)
+
+print(f'\n[System] Disconnected from {ADDR[0]}:{ADDR[1]}.')
