@@ -31,10 +31,10 @@ while True:
     print('\nEnter your message:')
     message = input('>>> ')
 
-    if message:
-        send(message)
-    else:
+    if not message:
         break
+
+    send(message)
 
 send(DISCONNECT_SIGNAL)
 
