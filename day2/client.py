@@ -34,6 +34,9 @@ while True:
     if not message:
         break
 
+    if message == DISCONNECT_SIGNAL:
+        break
+
     send(message)
 
 send(DISCONNECT_SIGNAL)
