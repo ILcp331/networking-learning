@@ -27,7 +27,7 @@ def handle_client(conn: socket.socket, addr: socket._RetAddress):
             print(f'[{addr}] disconnected.')
             print(f'[System] Active connections: {threading.active_count() - 2}')
 
-            continue
+            break
 
         print(f'[{addr}]: {msg}')
 
