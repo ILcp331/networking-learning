@@ -25,6 +25,8 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
 print(f'\n[System] Successfully connected to {ADDR[0]}:{ADDR[1]}.')
+print(f'[System] Device name: {socket.gethostname()}')
+print(f'[System] Connected as: {client.getpeername()}')
 print('Submit a blank message or "!q" to disconnect.')
 
 while True:
