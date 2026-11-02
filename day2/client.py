@@ -1,4 +1,5 @@
 import socket
+import atexit
 
 from config import PORT, FORMAT, HEADER_SIZE, DISCONNECT_SIGNAL
 
@@ -21,6 +22,23 @@ def send(message: str):
     client.send(msg)
 
 
+def disconnect():
+    print(f'\n[System] Disconnecting...')
+    send(DISCONNECT_SIGNAL)
+
+    client.shutdown(socket.SHUT_WR)
+    client.close()
+
+    print(f'[System] Disconnected from {ADDR[0]}:{ADDR[1]}.')
+
+
+def cleanup():
+    print('Cleaning up...')
+    disconnect()
+
+
+atexit.register(cleanup)
+
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
@@ -41,6 +59,5 @@ while True:
 
     send(message)
 
-send(DISCONNECT_SIGNAL)
-
-print(f'\n[System] Disconnected from {ADDR[0]}:{ADDR[1]}.')
+disconnect()
+atexit.unregister(cleanup)
