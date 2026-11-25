@@ -1,9 +1,4 @@
 import socket
-import requests
-
-
-def get_public_ip() -> str:
-    return requests.get('https://api.ipify.org').text
 
 
 def get_local_ip():
